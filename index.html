@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>บันทึกรายรับรายจ่าย</title>
+</head>
+<body>
+  <h2>บันทึกรายรับรายจ่าย</h2>
+  <form id="expenseForm">
+    วันที่: <input type="date" id="date" required><br>
+    ประเภท: 
+    <select id="type">
+      <option value="รายรับ">รายรับ</option>
+      <option value="รายจ่าย">รายจ่าย</option>
+    </select><br>
+    รายละเอียด: <input type="text" id="detail" required><br>
+    จำนวนเงิน: <input type="number" id="amount" required><br>
+    <button type="submit">บันทึก</button>
+  </form>
+
+  <p id="result"></p>
+
+  <script>
+    document.getElementById("expenseForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const data = {
+        date: document.getElementById("date").value,
+        type: document.getElementById("type").value,
+        detail: document.getElementById("detail").value,
+        amount: document.getElementById("amount").value
+      };
+
+      fetch("1s3t6qYelPvAWymF4Hk81ofwOb5sf04YQb1f-MLJmeYCrdj5zQv6lArf1", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(response => response.text())
+      .then(result => {
+        document.getElementById("result").innerText = "บันทึกสำเร็จ!";
+        document.getElementById("expenseForm").reset();
+      })
+      .catch(error => {
+        document.getElementById("result").innerText = "เกิดข้อผิดพลาด";
+      });
+    });
+  </script>
+</body>
+</html>
